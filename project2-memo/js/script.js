@@ -30,6 +30,7 @@ function addCards() {
   for (let i=0; i<16; i++) {
     var newDiv = document.createElement('div');
     newDiv.classList.add('card');
+    newDiv.classList.add('not-played');
     var newContent = document.createTextNode('Hello');
     newDiv.appendChild(newContent);
     newDiv.id = 'card'.concat(i+1);
@@ -41,3 +42,35 @@ function addCards() {
 }
 
 shuffle(array1);
+
+let cardsplayed = 0;
+let card1;
+let card1Id;
+
+// inspired by https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/
+document.addEventListener('click', function (event) {
+  if (!event.target.classList.contains('not-played')) return;
+
+  cardsplayed +=1;
+  console.log(cardsplayed);
+
+  if (cardsplayed < 2) {
+    event.target.classList.replace('not-played', 'ingame');
+    card1 = event.target.children[0].classList;
+    card1Id = event.target.id;
+    console.log(card1, card1Id);
+  } else {
+    event.target.classList.replace('not-played', 'ingame');
+
+    if(event.target.children[0].classList.value === card1.value) {
+      event.target.classList.replace('ingame', 'played');
+      document.getElementById(card1Id).classList.replace('ingame', 'played');
+      cardsplayed = 0;
+    } else {
+      event.target.classList.replace('ingame', 'not-played');
+      document.getElementById(card1Id).classList.replace('ingame', 'not-played');
+      cardsplayed = 0;
+    }
+  }
+
+});

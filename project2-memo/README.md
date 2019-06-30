@@ -1,14 +1,21 @@
-# Memory Game Project
+# Memory Game Project - in development
 
 ## Table of contents
 
 - Project Definition
-- JS Functions
+- Progress
+- Issues
 
 ## Project Definition
 
 Can be found here: https://review.udacity.com/#!/rubrics/591/view
 
-## JS Functions
+## Progress
 
-- Card flipping: https://www.w3schools.com/howto/howto_css_flip_card.asp
+- 16 cards with unique ID drawn on browser
+- Card matching function working (event listener for click)
+
+
+## Issues
+
+- Clicking on icon won't select the card.

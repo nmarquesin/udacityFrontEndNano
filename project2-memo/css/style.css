@@ -9,12 +9,23 @@
   width: 150px;
   background-color: white;
   color: black;
-  border: 3px solid green;
   margin: 10px;
   font-size: 48px;
   text-align: center;
   vertical-align: middle;
   padding-top: 51px;
+}
+
+.not-played{
+  border: 3px solid blue;
+}
+
+.played{
+  border: 3px solid green;
+}
+
+.ingame{
+  border: 3px solid yellow;
 }
 
 i {
