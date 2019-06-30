@@ -18,14 +18,26 @@
 
 .not-played{
   border: 3px solid blue;
+  background: blue;
+
+}
+
+.not-played .svg-inline--fa{
+  visibility: hidden;
 }
 
 .played{
   border: 3px solid green;
+  visibility: visible;
 }
 
 .ingame{
   border: 3px solid yellow;
+  visibility: visible;
+}
+
+.wrong-pair{
+  border: 3px solid red;
 }
 
 i {

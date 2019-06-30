@@ -117,14 +117,16 @@ shuffle(array1);
 
 let cardsplayed = 0;  // number of cards in play
 let card1; // value of the first card of the pair
+let card2; // value of the second card of the pair
 let card1Id; // card ID of the first card of the pair
+let card2Id; // card ID of the second card of the pair
 let pairs = 0; // number of pairs matched
 let gameTime = false;
 let moves = 0; // number of moves the player has made
 let refreshIntervalId;
 
 // gameplay
-// inspired by https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/
+// event listener inspired by https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/
 document.addEventListener('click', function (event) {
   if (!event.target.classList.contains('not-played')) return;
 
@@ -140,25 +142,31 @@ document.addEventListener('click', function (event) {
 
   cardsplayed +=1;
 
-  if (cardsplayed < 2) { //if it's the first card played
+  if (cardsplayed < 2) { //if it's the first card ever played
     event.target.classList.replace('not-played', 'ingame');
     card1 = event.target.children[0].classList;
     card1Id = event.target.id;
     console.log(card1, card1Id);
-  } else { // if it's the second card played
+  } else if (cardsplayed < 3) { // if it's the second card played
     event.target.classList.replace('not-played', 'ingame');
-
+    card2 = event.target.children[0].classList;
+    card2Id = event.target.id;
     // if pair of cards match
-    if(event.target.children[0].classList.value === card1.value) {
+    if(card2.value === card1.value) {
       event.target.classList.replace('ingame', 'played');
       document.getElementById(card1Id).classList.replace('ingame', 'played');
-      cardsplayed = 0;
       pairs +=1;
     } else { // if pair of cards doesn't match
-      event.target.classList.replace('ingame', 'not-played');
-      document.getElementById(card1Id).classList.replace('ingame', 'not-played');
-      cardsplayed = 0;
+      event.target.classList.replace('ingame', 'wrong-pair');
+      document.getElementById(card1Id).classList.replace('ingame', 'wrong-pair');
     }
+  } else { // card played after pair that doesn't match
+      event.target.classList.replace('not-played', 'ingame');
+      document.getElementById(card2Id).classList.replace('wrong-pair', 'not-played');
+      document.getElementById(card1Id).classList.replace('wrong-pair', 'not-played');
+      cardsplayed = 1;
+      card1 = event.target.children[0].classList;
+      card1Id = event.target.id;
   }
 
   // check end of gameplay
