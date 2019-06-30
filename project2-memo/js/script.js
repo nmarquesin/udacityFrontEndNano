@@ -54,6 +54,7 @@ function clearTimer() {
 // Reset game
 function reset() {
   clearTimer();
+  document.getElementById('moves').innerHTML = '0';
   shuffle(array1);
   cardsplayed = 0;
   pairs = 0;
@@ -105,6 +106,7 @@ document.addEventListener('click', function (event) {
   }
 
   moves +=1;
+  document.getElementById('moves').innerHTML = moves;
   cardsplayed +=1;
 
   if (cardsplayed < 2) { //if it's the first card played
@@ -131,7 +133,7 @@ document.addEventListener('click', function (event) {
   // check end of gameplay
   if (pairs > 1) {  // change 1 to 7 for production
     stopTimer();
-    if (window.confirm("Congratulations!!\nYou win!\n\nGame duration: "+minutesLabel.innerHTML+":"+secondsLabel.innerHTML+"\n\nWould you like to play again?")) {
+    if (window.confirm("Congratulations!!\nYou win!\n\nGame duration: "+minutesLabel.innerHTML+":"+secondsLabel.innerHTML+"\nTotal moves: "+moves+"\n\nWould you like to play again?")) {
       reset();
     }
   }
