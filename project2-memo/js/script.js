@@ -59,8 +59,35 @@ function reset() {
   cardsplayed = 0;
   pairs = 0;
   moves = 0;
-  document.getElementById('deck').innerHTML = "";
+  let stars = '<i class="far fa-star"></i>'
+  stars = stars.repeat(3)
+  document.getElementById('stars').innerHTML = stars;
+  document.getElementById('deck').innerHTML = '';
   document.body = addCards();
+}
+
+function starRating(moves) {
+  let stars;
+  if (moves < 25){
+    stars = 3;
+  } else if (moves < 32) {
+    stars = 2;
+  } else {
+    stars = 1;
+  }
+  const fullStar = '<i class="fas fa-star"></i>';
+  const emptyStar = '<i class="far fa-star"></i>';
+  let rating = fullStar.repeat(stars).concat(emptyStar.repeat(3-stars));
+  return [rating, stars];
+}
+
+function winMsg() {
+  let stars = starRating(moves)[1];
+  let msg = 'Congratulations!!\nYou won!\n\nGame duration: '
+  +minutesLabel.innerHTML+':'+secondsLabel.innerHTML+
+  '\nTotal moves: '+moves+'\nRating: '+stars+' stars'+
+  '\n\nWould you like to play again?';
+  return msg;
 }
 
 let minutesLabel;
@@ -107,6 +134,10 @@ document.addEventListener('click', function (event) {
 
   moves +=1;
   document.getElementById('moves').innerHTML = moves;
+
+  // check star rating
+  document.getElementById('stars').innerHTML = starRating(moves)[0];
+
   cardsplayed +=1;
 
   if (cardsplayed < 2) { //if it's the first card played
@@ -133,7 +164,7 @@ document.addEventListener('click', function (event) {
   // check end of gameplay
   if (pairs > 1) {  // change 1 to 7 for production
     stopTimer();
-    if (window.confirm("Congratulations!!\nYou win!\n\nGame duration: "+minutesLabel.innerHTML+":"+secondsLabel.innerHTML+"\nTotal moves: "+moves+"\n\nWould you like to play again?")) {
+    if (window.confirm(winMsg())) {
       reset();
     }
   }
