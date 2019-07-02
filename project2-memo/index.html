@@ -6,6 +6,8 @@
     <meta name="description" content="Memory Card Game">
     <meta name="author" content="Nathalie Risbakk">
     <meta name="keywords" content="Udacity, Nano Degree, Memory Game Project">
+    <!--Link to font-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <!--Link to css file-->
     <link rel="stylesheet"  type="text/css"  href="css/style.css" />
     <!--Link to Font Awesome CSS-->
@@ -17,10 +19,18 @@
   </head>
   <body>
     <nav>
-      <button onclick="reset();">Restart</button>
-      <label for="game time" id="minutes">00</label>:<label id="seconds">00</label>
-      Moves: <label for="number of moves a user has made" id="moves">0</label>
-      Rating: <label for="player rating" id="stars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></label>
+      <div class="restart">
+        <button onclick="reset();">Restart</button>
+      </div>
+      <div class="game-time">
+        <label for="game time" id="minutes">00</label>:<label id="seconds">00</label>
+      </div>
+      <div class="moves">
+        Moves: <label for="number of moves a user has made" id="moves">0</label>
+      </div>
+      <div class="rating">
+        Rating: <label for="player rating" id="stars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></label>
+      </div>
     </nav>
     <div id="deck">
 

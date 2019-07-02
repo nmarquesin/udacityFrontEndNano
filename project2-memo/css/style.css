@@ -1,12 +1,38 @@
 #deck {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  min-width: 550px;
+  max-width: 1000px;
+  justify-content: center;
+  background-image: linear-gradient(to bottom right, DarkSeaGreen, MediumTurquoise, DodgerBlue);
+  padding: 40px 0px;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  min-width: 550px;
+  max-width: 1000px;
+  justify-content: space-around;
+  font-size: 1.5em;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+button {
+  padding: 15px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  font-size: 1.2em;
 }
 
 .card{
   background-color: transparent;
   height: 100px;
-  width: 150px;
+  width: 20%;
   background-color: white;
   color: black;
   margin: 10px;
@@ -14,11 +40,12 @@
   text-align: center;
   vertical-align: middle;
   padding-top: 51px;
+  border-radius: 10px;
 }
 
 .not-played{
-  border: 3px solid blue;
-  background: blue;
+  border: 3px solid lightblue;
+  background: lightblue;
 
 }
 
@@ -27,17 +54,17 @@
 }
 
 .played{
-  border: 3px solid green;
+  border: 3px solid white;
   visibility: visible;
 }
 
 .ingame{
-  border: 3px solid yellow;
+  border: 3px solid greenyellow;
   visibility: visible;
 }
 
 .wrong-pair{
-  border: 3px solid red;
+  border: 3px solid indianred;
 }
 
 i {

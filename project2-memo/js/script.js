@@ -28,15 +28,13 @@ function shuffle(array) {
 // Add 16 cards with unique ids
 function addCards() {
   for (let i=0; i<16; i++) {
-    var newDiv = document.createElement('div');
+    let newDiv = document.createElement('div');
     newDiv.classList.add('card');
     newDiv.classList.add('not-played');
-    var newContent = document.createTextNode('Hello');
-    newDiv.appendChild(newContent);
     newDiv.id = 'card'.concat(i+1);
     newDiv.innerHTML = "<i class=\"fas fa-"+array1[i][0]+"\"></i>";
     newDiv.style.color= array1[i][1];
-    var parentDiv = document.getElementById("deck");
+    let parentDiv = document.getElementById("deck");
     parentDiv.insertBefore(newDiv, null);
   }
 }
@@ -170,7 +168,7 @@ document.addEventListener('click', function (event) {
   }
 
   // check end of gameplay
-  if (pairs > 1) {  // change 1 to 7 for production
+  if (pairs > 7) {  // change 1 to 7 for production
     stopTimer();
     if (window.confirm(winMsg())) {
       reset();
