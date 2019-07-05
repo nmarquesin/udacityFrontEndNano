@@ -5,10 +5,11 @@
 - Project Definition
 - Progress
 - Issues
+- Dependencies
 
 ## Project Definition
 
-Here: https://review.udacity.com/#!/rubrics/591/view
+[Here](https://review.udacity.com/#!/rubrics/591/view)
 
 ## Progress
 
@@ -18,3 +19,9 @@ Here: https://review.udacity.com/#!/rubrics/591/view
 - CSS styling with animation
 
 ## Issues
+
+## Dependencies
+
+- [Google Fonts](https://fonts.google.com/)
+- [Animate.css](https://daneden.github.io/animate.css/)
+- [Font Awesome](https://fontawesome.com/)
