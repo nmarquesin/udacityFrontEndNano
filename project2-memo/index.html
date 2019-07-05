@@ -20,25 +20,26 @@
     <title>Memory Game</title>
   </head>
   <body>
-    <header>
-      <h1>Memory Game</h1>
-    </header>
-    <nav>
-      <div class="restart">
-        <button onclick="reset();">Restart</button>
+    <div class="container">
+      <header>
+        <h1>Memory Game</h1>
+      </header>
+      <nav>
+        <div class="restart">
+          <button onclick="reset();">Restart</button>
+        </div>
+        <div class="game-time">
+          <label for="game time" id="minutes">00</label>:<label id="seconds">00</label>
+        </div>
+        <div class="moves">
+          Moves: <label for="number of moves a user has made" id="moves">0</label>
+        </div>
+        <div class="rating">
+          Rating: <label for="player rating" id="stars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></label>
+        </div>
+      </nav>
+      <div id="deck">
       </div>
-      <div class="game-time">
-        <label for="game time" id="minutes">00</label>:<label id="seconds">00</label>
-      </div>
-      <div class="moves">
-        Moves: <label for="number of moves a user has made" id="moves">0</label>
-      </div>
-      <div class="rating">
-        Rating: <label for="player rating" id="stars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></label>
-      </div>
-    </nav>
-    <div id="deck">
-
     </div>
   </body>
 </htm>
