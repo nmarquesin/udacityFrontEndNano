@@ -25,8 +25,8 @@
         <h1>Memory Game</h1>
       </header>
       <nav>
-        <div class="restart">
-          <button onclick="reset();">Restart</button>
+        <div class="restart" id="reset">
+          <button onclick="reset()">Restart</button>
         </div>
         <div class="game-time">
           <label for="game time" id="minutes">00</label>:<label id="seconds">00</label>
@@ -40,6 +40,7 @@
       </nav>
       <div id="deck">
       </div>
+      <p>Keyboard mode: TAB moves focus to next card, SHIFT+TAB moves focus to previous card and ENTER selects card.</p>
     </div>
   </body>
 </htm>

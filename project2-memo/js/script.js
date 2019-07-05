@@ -37,7 +37,7 @@ function shuffle(array) {
   return array;
 }
 
-// Add 16 cards with unique ids
+// add 16 cards with unique ids
 function addCards() {
   for (let i=0; i<16; i++) {
     let newDiv = document.createElement('div');
@@ -46,7 +46,8 @@ function addCards() {
     newDiv.classList.add('animated');
     newDiv.id = 'card'.concat(i+1);
     newDiv.innerHTML = "<i class=\"fas fa-"+array1[i][0]+"\"></i>";
-    newDiv.style.color= array1[i][1];
+    newDiv.style.color = array1[i][1];
+    newDiv.tabIndex = 0;
     let parentDiv = document.getElementById("deck");
     parentDiv.insertBefore(newDiv, null);
   }
@@ -62,8 +63,10 @@ function clearTimer() {
   totalSeconds = 0;
 }
 
-// Reset game
+// restart game
 function reset() {
+  if (moves === 0) return;
+
   clearTimer();
   document.getElementById('moves').innerHTML = '0';
   shuffle(array1);
@@ -74,7 +77,9 @@ function reset() {
   stars = stars.repeat(3)
   document.getElementById('stars').innerHTML = stars;
   document.getElementById('deck').innerHTML = '';
-  document.body = addCards();
+  addCards();
+  card1Id = 'foo';
+  card2Id = 'foo';
 }
 
 // star rating conditions
@@ -98,7 +103,7 @@ function winMsg() {
   let stars = starRating(moves)[1];
   let msg = 'Congratulations!!\nYou won!\n\nGame duration: '
   +minutesLabel.innerHTML+':'+secondsLabel.innerHTML+
-  '\nTotal moves: '+moves+'\nRating: '+stars+' stars'+
+  '\nTotal moves: '+moves+'\nStars: '+stars+
   '\n\nWould you like to play again?';
   return msg;
 }
@@ -123,40 +128,45 @@ function pad(val) {
 
 // add animation to card selection
 function flipCard(event) {
+  if ((card1Id === event.target.id) || (card2Id === event.target.id)) return;
+
   event.target.classList.remove('flipInY');
-  void event.target.offsetWidth; // -> trigger reflow  to reload css animation
+  void event.target.offsetWidth; // -> trigger reflow to reload css animation
   event.target.classList.replace('not-played', 'ingame');
   event.target.classList.add('flipInY');
 }
 
-shuffle(array1);
+// check if the same card was selected twice
+function isPreviousCard(e) {
+  if ((card1Id === e.target.id) || (card2Id === e.target.id)) return true;
+  else return false;
+}
 
+// prevent selecting a card in play again
+function cardNotSelectable(card, e) {
+    card.tabIndex = -1;
+}
 
+function makeAMove(e) {
+  flipCard(e);
+  cardNotSelectable(e.target, e);
+}
 
 // gameplay
-// event listener inspired by https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/
-document.addEventListener('click', function (event) {
-  if (!event.target.classList.contains('not-played')) return;
+function gamePlay(event) {
+
+  if (!(cardsplayed === 0) && isPreviousCard(event)) return;
 
   if (moves === 0) { // starts timer for a new match
     refreshIntervalId = setInterval(setTime, 1000);
   }
 
-  moves +=1;
-  document.getElementById('moves').innerHTML = moves;
-
-  // check star rating
-  document.getElementById('stars').innerHTML = starRating(moves)[0];
-
-  cardsplayed +=1;
-
-  if (cardsplayed < 2) { //if it's the first card ever played
-    flipCard(event);
+  if (cardsplayed < 1) { //if it's the first card ever played
+    makeAMove(event);
     card1 = event.target.children[0].classList;
     card1Id = event.target.id;
-    console.log(card1, card1Id);
-  } else if (cardsplayed < 3) { // if it's the second card played
-    flipCard(event);
+  } else if (cardsplayed < 2) { // if it's the second card played
+    makeAMove(event);
     card2 = event.target.children[0].classList;
     card2Id = event.target.id;
     // if pair of cards match
@@ -169,18 +179,27 @@ document.addEventListener('click', function (event) {
       document.getElementById(card1Id).classList.replace('ingame', 'wrong-pair');
     }
   } else { // card played after pair that doesn't match
-      flipCard(event);
-      // flipCardBack(event, card1Id);
-      // flipCardBack(event, card2Id);
+      makeAMove(event);
       document.getElementById(card2Id).classList.replace('wrong-pair', 'not-played');
       document.getElementById(card1Id).classList.replace('wrong-pair', 'not-played');
-      cardsplayed = 1;
+      document.getElementById(card2Id).tabIndex = 0;
+      document.getElementById(card1Id).tabIndex = 0;
+      cardsplayed = 0;
       card1 = event.target.children[0].classList;
       card1Id = event.target.id;
+      card2Id = event.target.id;
   }
 
+  moves +=1;
+  document.getElementById('moves').innerHTML = moves;
+
+  // check star rating
+  document.getElementById('stars').innerHTML = starRating(moves)[0];
+
+  cardsplayed +=1;
+
   // check end of gameplay
-  if (pairs > 7) {  // change 1 to 7 for production
+  if (pairs > 7) {  // change number to 7 for production
     stopTimer();
     setTimeout(function(){
       if (window.confirm(winMsg())) {
@@ -189,5 +208,24 @@ document.addEventListener('click', function (event) {
   }, 500);
 
   }
+}
 
+shuffle(array1);
+
+// event listener inspired by https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/
+document.addEventListener('click', function (event) {
+  if (!event.target.classList.contains('not-played')) return;
+  gamePlay(event);
+});
+
+// event listenet for keyboard
+document.addEventListener('keydown', function (event) {
+  if (event.which === 13) { // 13 is key code for ENTER
+    if (event.target.id === 'reset') {
+      reset();
+    }
+    else if (event.target.classList.contains('not-played')){
+      gamePlay(event);
+    }
+  }
 });
