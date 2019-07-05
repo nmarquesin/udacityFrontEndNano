@@ -14,6 +14,7 @@ let pairs = 0; // number of pairs matched
 let gameTime = false;
 let moves = 0; // number of moves the player has made
 let refreshIntervalId;
+// possible to add different arrays to add card categories: transport (current), people, technology, etc
 let array1 = [['truck', 'mediumvioletred'], ['truck', 'mediumvioletred'], ['car-side', 'pink'],
 ['car-side', 'pink'], ['truck-monster', 'orange'], ['truck-monster', 'orange'], ['ship', 'navy'],
 ['ship', 'navy'], ['bus', 'purple'], ['bus', 'purple'], ['plane', 'grey'],
