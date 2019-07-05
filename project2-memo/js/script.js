@@ -31,6 +31,7 @@ function addCards() {
     let newDiv = document.createElement('div');
     newDiv.classList.add('card');
     newDiv.classList.add('not-played');
+    newDiv.classList.add('animated');
     newDiv.id = 'card'.concat(i+1);
     newDiv.innerHTML = "<i class=\"fas fa-"+array1[i][0]+"\"></i>";
     newDiv.style.color= array1[i][1];
@@ -111,6 +112,21 @@ function pad(val) {
   }
 }
 
+function flipCard(event) {
+  event.target.classList.remove('flipInY');
+  void event.target.offsetWidth; // -> trigger reflow  to reload css animation
+  event.target.classList.replace('not-played', 'ingame');
+  event.target.classList.add('flipInY');
+}
+
+// function flipCardBack(event, cardId) {
+//   document.getElementById(cardId).classList.remove('flipInY');
+//   void event.target.offsetWidth;
+//   document.getElementById(cardId).classList.replace('wrong-pair', 'not-played');
+//   document.getElementById(cardId).classList.add('flipInY');
+// }
+
+
 shuffle(array1);
 
 let cardsplayed = 0;  // number of cards in play
@@ -141,12 +157,12 @@ document.addEventListener('click', function (event) {
   cardsplayed +=1;
 
   if (cardsplayed < 2) { //if it's the first card ever played
-    event.target.classList.replace('not-played', 'ingame');
+    flipCard(event);
     card1 = event.target.children[0].classList;
     card1Id = event.target.id;
     console.log(card1, card1Id);
   } else if (cardsplayed < 3) { // if it's the second card played
-    event.target.classList.replace('not-played', 'ingame');
+    flipCard(event);
     card2 = event.target.children[0].classList;
     card2Id = event.target.id;
     // if pair of cards match
@@ -159,7 +175,9 @@ document.addEventListener('click', function (event) {
       document.getElementById(card1Id).classList.replace('ingame', 'wrong-pair');
     }
   } else { // card played after pair that doesn't match
-      event.target.classList.replace('not-played', 'ingame');
+      flipCard(event);
+      // flipCardBack(event, card1Id);
+      // flipCardBack(event, card2Id);
       document.getElementById(card2Id).classList.replace('wrong-pair', 'not-played');
       document.getElementById(card1Id).classList.replace('wrong-pair', 'not-played');
       cardsplayed = 1;
