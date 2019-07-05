@@ -5,8 +5,21 @@
   min-width: 550px;
   max-width: 1050px;
   justify-content: center;
-  background-image: linear-gradient(to bottom right, DarkSeaGreen, MediumTurquoise, DodgerBlue);
+  background-image: linear-gradient(to bottom right, #ffc300, #ff5733, #c70039, #900c3f, #581845);
+    /* DarkSeaGreen, MediumTurquoise, DodgerBlue); */
   padding: 40px 0px;
+  border-radius: 20px;
+  box-shadow: 10px 10px 5px -5px #a3a1a3;
+}
+
+h1 {
+  font-family: 'Barriecito', cursive;
+  text-align: center;
+  font-size: 3em;
+  /* background: -webkit-linear-gradient(#eee, #333); */
+  background-image: linear-gradient(#c70039, #ffc300);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 nav {
@@ -16,9 +29,10 @@ nav {
   min-width: 550px;
   max-width: 1000px;
   justify-content: space-around;
-  font-size: 1.5em;
+  font-size: 1.2em;
   align-items: center;
   font-family: 'Roboto', sans-serif;
+  color: #525353;
 }
 
 button {
@@ -26,7 +40,7 @@ button {
   margin: 10px;
   border-radius: 5px;
   border: 1px solid gray;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .card{
@@ -44,8 +58,8 @@ button {
 }
 
 .not-played{
-  border: 3px solid lightblue;
-  background: lightblue;
+  border: 3px solid #525353;
+  background: #525353;
 
 }
 
@@ -64,7 +78,7 @@ button {
 }
 
 .wrong-pair{
-  border: 3px solid indianred;
+  border: 3px solid #fd08ed;
 }
 
 i {

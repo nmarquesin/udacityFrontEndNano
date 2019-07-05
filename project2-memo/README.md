@@ -15,8 +15,6 @@ Here: https://review.udacity.com/#!/rubrics/591/view
 - 16 cards with unique ID drawn on browser
 - Card matching function working (event listener for click)
 - Reset button, chronometer, moves counter and star rating implemented
-- Basic CSS styling
+- CSS styling with animation
 
 ## Issues
-
-- Last card selected isn't revealed before winning message pops up.

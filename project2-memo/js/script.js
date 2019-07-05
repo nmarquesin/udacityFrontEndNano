@@ -1,12 +1,24 @@
 // create 16 cards
 document.body.onload = addCards;
 
-
-let array1 = [['truck', 'blue'], ['truck', 'blue'], ['car-side', 'pink'],
+// variables
+let minutesLabel;
+let secondsLabel;
+let totalSeconds = 0;
+let cardsplayed = 0;  // number of cards in play
+let card1; // value of the first card of the pair
+let card2; // value of the second card of the pair
+let card1Id; // card ID of the first card of the pair
+let card2Id; // card ID of the second card of the pair
+let pairs = 0; // number of pairs matched
+let gameTime = false;
+let moves = 0; // number of moves the player has made
+let refreshIntervalId;
+let array1 = [['truck', 'mediumvioletred'], ['truck', 'mediumvioletred'], ['car-side', 'pink'],
 ['car-side', 'pink'], ['truck-monster', 'orange'], ['truck-monster', 'orange'], ['ship', 'navy'],
 ['ship', 'navy'], ['bus', 'purple'], ['bus', 'purple'], ['plane', 'grey'],
 ['plane', 'grey'], ['ambulance', 'red'], ['ambulance', 'red'],
-['tractor', 'green'], ['tractor', 'green']];
+['tractor', 'deeppink'], ['tractor', 'deeppink']];
 
 // shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -65,11 +77,12 @@ function reset() {
   document.body = addCards();
 }
 
+// star rating conditions
 function starRating(moves) {
   let stars;
-  if (moves < 25){
+  if (moves < 35){
     stars = 3;
-  } else if (moves < 32) {
+  } else if (moves < 55) {
     stars = 2;
   } else {
     stars = 1;
@@ -80,6 +93,7 @@ function starRating(moves) {
   return [rating, stars];
 }
 
+// popup message when winning
 function winMsg() {
   let stars = starRating(moves)[1];
   let msg = 'Congratulations!!\nYou won!\n\nGame duration: '
@@ -88,11 +102,6 @@ function winMsg() {
   '\n\nWould you like to play again?';
   return msg;
 }
-
-let minutesLabel;
-let secondsLabel;
-let totalSeconds = 0;
-
 
 // setTime and pad functions from https://stackoverflow.com/a/5517836
 function setTime() {
@@ -112,6 +121,7 @@ function pad(val) {
   }
 }
 
+// add animation to card selection
 function flipCard(event) {
   event.target.classList.remove('flipInY');
   void event.target.offsetWidth; // -> trigger reflow  to reload css animation
@@ -119,25 +129,9 @@ function flipCard(event) {
   event.target.classList.add('flipInY');
 }
 
-// function flipCardBack(event, cardId) {
-//   document.getElementById(cardId).classList.remove('flipInY');
-//   void event.target.offsetWidth;
-//   document.getElementById(cardId).classList.replace('wrong-pair', 'not-played');
-//   document.getElementById(cardId).classList.add('flipInY');
-// }
-
-
 shuffle(array1);
 
-let cardsplayed = 0;  // number of cards in play
-let card1; // value of the first card of the pair
-let card2; // value of the second card of the pair
-let card1Id; // card ID of the first card of the pair
-let card2Id; // card ID of the second card of the pair
-let pairs = 0; // number of pairs matched
-let gameTime = false;
-let moves = 0; // number of moves the player has made
-let refreshIntervalId;
+
 
 // gameplay
 // event listener inspired by https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/
@@ -188,9 +182,12 @@ document.addEventListener('click', function (event) {
   // check end of gameplay
   if (pairs > 7) {  // change 1 to 7 for production
     stopTimer();
-    if (window.confirm(winMsg())) {
-      reset();
-    }
+    setTimeout(function(){
+      if (window.confirm(winMsg())) {
+        reset();
+      }
+  }, 500);
+
   }
 
 });
