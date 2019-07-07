@@ -1,3 +1,6 @@
+// Whole-script strict mode syntax
+'use strict';
+
 // create 16 cards
 document.body.onload = addCards;
 
