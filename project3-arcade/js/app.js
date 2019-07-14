@@ -43,23 +43,24 @@ class Player {
 		const incrementX = 102;
 		switch (move) {
 			case "up":
-				if !(this.y === -5) {
-					this.y -= incrementY;
-					console.log('new y is '+this.y);
-					break;
-				}
-				else break; 
+				if (this.y === -5){break;}
+				this.y -= incrementY;
+				console.log('new y is '+this.y);
+				break;
 			case "down":
+				if (this.y === 405){break;}
 				this.y += incrementY;
 				console.log('new y is '+this.y);
 				break;
 			case "right":
+				if (this.x === 404){break;}
 				this.x += incrementX;
-				console.log('new y is '+this.x);
+				console.log('new x is '+this.x);
 				break;
 			case "left":
+				if (this.x === -4){break;}
 				this.x -= incrementX;
-				console.log('new y is '+this.x);
+				console.log('new x is '+this.x);
 				break;
 		}
 	}
