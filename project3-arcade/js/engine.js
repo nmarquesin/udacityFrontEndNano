@@ -77,9 +77,36 @@ var Engine = (function(global) {
      * functionality this way (you could just implement collision detection
      * on the entities themselves within your app.js file).
      */
+     
+     // function collides from https://stackoverflow.com/a/14062645
+    function collides(a, b){
+    	if (a.x < b.x + b.width &&
+        a.x + a.width > b.x &&
+        a.y < b.y + b.height &&
+        a.y + a.height > b.y) return true;
+    }
+    
+    function collision(p) {
+    	p.lives -= 1;
+    	console.log("BANG! You now have " + p.lives + 
+    	(p.lives === 1 ? " life" : " lives"));
+    	p.x = p.posIni[0];
+    	p.y = p.posIni[1];
+    	if (p.lives === 0) gameOver();
+    }
+     
+    function gameOver() {
+    	console.log('Game Over');
+    }
     function update(dt) {
         updateEntities(dt);
         // checkCollisions();
+        allEnemies.forEach(function(enemy) {
+        	if (collides(player, enemy)) {
+        		collision(player);
+        	}
+        });
+        
     }
 
     /* This is called by the update function and loops through all of the
@@ -155,6 +182,7 @@ var Engine = (function(global) {
 
         player.render();
     }
+    
 
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
