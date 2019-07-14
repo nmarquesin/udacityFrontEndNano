@@ -22,7 +22,7 @@ class Enemy {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.speedIncrement;
-    if (this.x === 1000) this.x = this.xIni;
+    if (this.x > 1000) this.x = this.xIni;
 	}
 
 // Draw the enemy on the screen, required method for game
@@ -43,6 +43,7 @@ class Player {
 		this.width = width;
 		this.height = height;
 		this.lives = 3;
+		this.lvl = 0;
 	}
 
 // This class requires an update(), render() and
@@ -85,8 +86,56 @@ class Player {
 
 
 // Now instantiate your objects.
+
+/*
+// Random positions and speeds for enemies
+function randPosAndSpeed(p) {
+	// Randomly decides if enemy will be in row 1, 2 or 3.
+	let yRow = Math.floor(Math.random() * Math.floor(3));
+	let posY;
+	switch(yRow){
+		case 0: 
+			posY = 67; // y value for row 1
+			break;
+		case 1: 
+			posY = 149; // y value for row 2
+			break;
+		case 2: 
+			posY = 231; // y value for row 3
+			break;
+		default:
+		}
+		
+	let posX = -200; // enemies start off-canvas
+	
+	let speed = function (level) {
+		let maxBaseSpeed = 10;
+		let minBaseSpeed = 5;
+		return Math.random() * ((maxBaseSpeed + p.lvl) - (minBaseSpeed + p.lvl)) + (minBaseSpeed + p.lvl); //increase random speeds when level increases
+	}
+	
+	console.log(posX, posY, speed);
+  return [posX, posY, speed];
+}
+
+// Make 4 enemies
+let allEnemies = [];
+for (let e = 0; e < 4; e++) {
+	allEnemies.push(new Enemy(randPosAndSpeed(player)));
+
+let xYS1 = randPosAndSpeed(player);
+let xYS2 = randPosAndSpeed(player);
+let xYS3 = randPosAndSpeed(player);
+let xYS4 = randPosAndSpeed(player);
+*/
+let e1 = new Enemy(-200, 67, 7);
+let e2 = new Enemy(-200, 149, 5);
+let e3 = new Enemy(-200, 231, 10);
+
+
+let allEnemies = [e1, e2, e3];
 // Place all enemy objects in an array called allEnemies
-let allEnemies = [new Enemy(), new Enemy(-150, 149, 6)];
+//let allEnemies = [new Enemy(), new Enemy(-150, 149, 6)];
 
 // Place the player object in a variable called player
 let player = new Player();
@@ -106,4 +155,3 @@ document.addEventListener('keyup', function(e) {
     
     return;
 });
-
