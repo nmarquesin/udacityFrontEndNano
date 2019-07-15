@@ -44,6 +44,7 @@ class Player {
 		this.height = height;
 		this.lives = 3;
 		this.lvl = 0;
+		this.gameOver = false;
 	}
 
 // This class requires an update(), render() and
@@ -56,28 +57,30 @@ class Player {
 	    }
 	    
 	handleInput(move) {
+		if (player.gameOver) return;
+		
 		const incrementY = 82;
 		const incrementX = 102;
 		switch (move) {
 			case "up":
 				if (this.y === -5){break;}
 				this.y -= incrementY;
-				console.log('new y is '+this.y);
+				//console.log('new y is '+this.y);
 				break;
 			case "down":
 				if (this.y === 405){break;}
 				this.y += incrementY;
-				console.log('new y is '+this.y);
+				//console.log('new y is '+this.y);
 				break;
 			case "right":
 				if (this.x === 404){break;}
 				this.x += incrementX;
-				console.log('new x is '+this.x);
+				//console.log('new x is '+this.x);
 				break;
 			case "left":
 				if (this.x === -4){break;}
 				this.x -= incrementX;
-				console.log('new x is '+this.x);
+				//console.log('new x is '+this.x);
 				break;
 		}
 	}
@@ -149,8 +152,8 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-    console.log(e.keyCode);
-    console.log(allowedKeys[e.keyCode]);
+    //console.log(e.keyCode);
+    //console.log(allowedKeys[e.keyCode]);
     player.handleInput(allowedKeys[e.keyCode]);
     
     return;

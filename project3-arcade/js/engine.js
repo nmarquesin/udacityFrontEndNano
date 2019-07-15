@@ -90,14 +90,23 @@ var Engine = (function(global) {
     	p.lives -= 1;
     	console.log("BANG! You now have " + p.lives + 
     	(p.lives === 1 ? " life" : " lives"));
-    	p.x = p.posIni[0];
-    	p.y = p.posIni[1];
+    	reset();
     	if (p.lives === 0) gameOver();
     }
      
     function gameOver() {
     	console.log('Game Over');
+    	player.gameOver = true;
     }
+    
+    function levelUp(p) {
+    	if (p.y === -5) {
+    		p.lvl++;
+    		reset();
+    		console.log("level: " + p.lvl);
+    	}
+    }
+    
     function update(dt) {
         updateEntities(dt);
         // checkCollisions();
@@ -106,6 +115,7 @@ var Engine = (function(global) {
         		collision(player);
         	}
         });
+        levelUp(player);
         
     }
 
@@ -189,7 +199,8 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        player.x = player.posIni[0];
+    	player.y = player.posIni[1];
     }
 
     /* Go ahead and load all of the images we know we're going to need to
