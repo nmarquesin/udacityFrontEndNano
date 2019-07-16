@@ -1,19 +1,20 @@
 // Enemies our player must avoid
 class Enemy {
-	constructor(posX = -160, posY = 231, speed = 5, width = 50, height = 50){
+	constructor(posY = 231, width = 50, height = 50){
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     	this.sprite = 'images/enemy-bug.png';
-		this.x = posX;
-		this.xIni = posX;
+		this.x = randomStart();
 		this.y = posY;
-		this.speedIncrement = speed;
+		this.speedIncrement = randomSpeed();
 		this.width = width;
 		this.height = height;
 	}
+	
+
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -22,14 +23,38 @@ class Enemy {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.speedIncrement;
-    if (this.x > 1000) this.x = this.xIni;
-	}
+    if (this.x > 600) {
+    	this.x = randomStart();
+    	this.speedIncrement = randomSpeed();
+	}}
 
 // Draw the enemy on the screen, required method for game
 	render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
+}
+
+function randomNumInInterval(a, b) {
+	return (Math.random() * (a - b) + b);
+}
+
+// This function returs a random start position off screen for enemies
+function randomStart() {
+	let startPos;
+	const a = -600;
+	const b = -200;
+	startPos = randomNumInInterval(a, b);
+	return startPos;
+}
+
+// This function returns a random speed withing an interval that depends on player level
+function randomSpeed() {
+	let speed;
+	const lSpeed = 5; // lower base speed
+	const hSpeed = 10; // higher base speed
+	speed = randomNumInInterval(hSpeed + player.lvl, lSpeed + player.lvl); //increase random speeds when level increases
+	return speed;
 }
 
 // Now write your own player class
@@ -91,58 +116,17 @@ class Player {
 
 // Now instantiate your objects.
 
-/*
-// Random positions and speeds for enemies
-function randPosAndSpeed(p) {
-	// Randomly decides if enemy will be in row 1, 2 or 3.
-	let yRow = Math.floor(Math.random() * Math.floor(3));
-	let posY;
-	switch(yRow){
-		case 0: 
-			posY = 67; // y value for row 1
-			break;
-		case 1: 
-			posY = 149; // y value for row 2
-			break;
-		case 2: 
-			posY = 231; // y value for row 3
-			break;
-		default:
-		}
-		
-	let posX = -200; // enemies start off-canvas
-	
-	let speed = function (level) {
-		let maxBaseSpeed = 10;
-		let minBaseSpeed = 5;
-		return Math.random() * ((maxBaseSpeed + p.lvl) - (minBaseSpeed + p.lvl)) + (minBaseSpeed + p.lvl); //increase random speeds when level increases
-	}
-	
-	console.log(posX, posY, speed);
-  return [posX, posY, speed];
-}
+// Place the player object in a variable called player
+let player = new Player(); // player has to be instantiated before enemies because enemy speed depends on player's properties.
 
-// Make 4 enemies
-let allEnemies = [];
-for (let e = 0; e < 4; e++) {
-	allEnemies.push(new Enemy(randPosAndSpeed(player)));
-
-let xYS1 = randPosAndSpeed(player);
-let xYS2 = randPosAndSpeed(player);
-let xYS3 = randPosAndSpeed(player);
-let xYS4 = randPosAndSpeed(player);
-*/
-let e1 = new Enemy(-200, 67, 7);
-let e2 = new Enemy(-200, 149, 5);
-let e3 = new Enemy(-200, 231, 10);
-
+let e1 = new Enemy(67);
+let e2 = new Enemy(149);
+let e3 = new Enemy(231);
 
 let allEnemies = [e1, e2, e3];
 // Place all enemy objects in an array called allEnemies
 //let allEnemies = [new Enemy(), new Enemy(-150, 149, 6)];
 
-// Place the player object in a variable called player
-let player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
