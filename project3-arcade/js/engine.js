@@ -91,7 +91,7 @@ var Engine = (function(global) {
     	console.log("BANG! You now have " + p.lives + 
     	(p.lives === 1 ? " life" : " lives"));
     	reset();
-    	if (p.lives === 0) gameOver();
+    	if (p.lives === 0) gameOver()
     }
      
     function gameOver() {
@@ -99,16 +99,33 @@ var Engine = (function(global) {
     	player.gameOver = true;
     }
     
+    function rndNum(n){
+    		return Math.floor(Math.random() * n);
+    	}
+    
     function levelUp(p) {
     	if (p.y === -5) {
-    		p.lvl++;
+    		p.lvl += 1;
     		p.points += 100;
+    		let oldPX = player.x;
     		reset();
     		console.log("level: " + p.lvl);
-    		//gems();
-    	}
+    		//console.log('X pos of gem is '+ gem.x);
+    		//console.log('X pos of p was '+ oldPX);
+    		//console.log('gem.draw is '+ gem.draw);
+    		if (p.lvl % 5 === 0 && gem.draw === false) {
+    			gem.draw = true;
+    			gem.code = rndNum(3);
+    			gem.x = rndNum(5)*100;
+    			//console.log('Get the gem to ' + gem.superPower[gem.code]);
+    			//console.log('X pos of gem is '+gem.x);
+    			//console.log('gem.draw is '+ gem.draw); 
+    		} else if (gem.draw === true && oldPX === gem.x) {
+    			gem.power();
+	    		gem.draw = false;
+    		}
+    	} 
     }
-    
     function update(dt) {
         updateEntities(dt);
         // checkCollisions();
@@ -180,6 +197,7 @@ var Engine = (function(global) {
         renderEntities();
         drawLives();
         drawPoints();
+        //drawGems();
     }
     
     /* This function draws the player's lives on the canvas */
@@ -192,68 +210,18 @@ var Engine = (function(global) {
     	ctx.font = "25px Arial";
     	
     	if (player.gameOver) {
-    		ctx.fillText("Game Over", 5, heartWidth + 5);
+    		ctx.fillText("Game Over", 350, heartWidth + 5);
     		} else {
 		    	for (count = 0; count < player.lives; count++){
-		    	ctx.drawImage(Resources.get(heart), count*heartWidth+5, 5, heartWidth - 5, (heartWidth-5)*1.5);
+		    	ctx.drawImage(Resources.get(heart), 450 -count*heartWidth+5, 5, heartWidth - 5, (heartWidth-5)*1.5);
 		    	}
 	    	}
     }
     
     /* This function prints points on screen */
     function drawPoints() {
-    	ctx.fillText(player.points.toString(), 450, 40);
+    	ctx.fillText(player.points.toString(), 0, 40);
     }
-    
-    // This function adds gem bonuses to game
-    // Blue gem --> slows enemies
-    // Green gem --> adds one life
-    // Orange gem --> doubles score
-    /*
-    function gems() {
-    	const allGems = [
-    		{
-    			gemCode: 0,
-    			gemImage: 'images/GemOrange.png',
-    			gemPower: function () {
-    				player.points *= 2;
-    			}
-    		}, 
-    		{
-    			gemCode: 1,
-    			gemImage: 'images/GemGreen.png',
-    			gemPower: function () {
-    				player.points *= 2;
-    			}
-    		}, 
-    		{
-    			gemCode: 2,
-    			gemImage: 'images/GemBlue.png',
-    			gemPower: function () {
-    				player.points *= 2;
-    			}
-    		}
-    	];
-    	function rndNum(n){
-	    	return Math.floor(Math.random() * n);
-      	}
-    	function rndGem(){
-    		return rndNum(3); // Random gem nos. 0, 1 or 2
-    	}
-    	function drawGem() {
-    		let xpos = rndNum(5)*100;
-    		let gem = allGems[rndGem()];
-    		console.log('here we go');
-    		console.log(allGems);
-    		console.log(gem);
-    		ctx.drawImage("images/GemBlue.png", xpos, -5);
-    		gem.gemPower;
-    	}
-    	if (player.lvl % 2 === 0) {
-    		drawGem();
-    	}
-    }
-    */
 
     /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined
@@ -268,12 +236,11 @@ var Engine = (function(global) {
         });
 
         player.render();
+        gem.render();
     }
     
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
+    /* This function does game reset states. 
      */
     function reset() {
         player.x = player.posIni[0];
@@ -290,7 +257,10 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png', 
-        'images/Heart.png'
+        'images/Heart.png',
+        'images/GemBlue.png', 
+        'images/GemOrange.png',
+        'images/GemGreen.png'
     ]);
     Resources.onReady(init);
 

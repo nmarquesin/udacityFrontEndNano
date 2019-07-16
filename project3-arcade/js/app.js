@@ -22,7 +22,7 @@ class Enemy {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x += this.speedIncrement;
+    this.x += this.speedIncrement * dt;
     if (this.x > 600) {
     	this.x = randomStart();
     	this.speedIncrement = randomSpeed();
@@ -42,8 +42,8 @@ function randomNumInInterval(a, b) {
 // This function returs a random start position off screen for enemies
 function randomStart() {
 	let startPos;
-	const a = -600;
-	const b = -200;
+	const a = -300
+	const b = -150;
 	startPos = randomNumInInterval(a, b);
 	return startPos;
 }
@@ -51,10 +51,48 @@ function randomStart() {
 // This function returns a random speed withing an interval that depends on player level
 function randomSpeed() {
 	let speed;
-	const lSpeed = 5; // lower base speed
-	const hSpeed = 10; // higher base speed
-	speed = randomNumInInterval(hSpeed + player.lvl, lSpeed + player.lvl); //increase random speeds when level increases
+	const lSpeed = 50; // lower base speed
+	const hSpeed = 100; // higher base speed
+	speed = randomNumInInterval(hSpeed + player.lvl * 10, lSpeed + player.lvl * 10); //increase random speeds when level increases
 	return speed;
+}
+
+// gem class
+
+class Gem {
+	constructor(){
+		this.sprite = ["images/GemBlue.png", "images/GemGreen.png", "images/GemOrange.png"];
+		this.superPower = ['make your enemies slower', 'win a life', 'double your points'];
+		this.power = function () {
+			switch (this.code) {
+			case 0:
+				player.lvl -= 5;
+				console.log('Your enemies are now slower!');
+				break;
+			case 1:
+				player.lives += 1;
+				console.log('You won a life!');
+				break;
+			case 2:
+				player.points -= 100;
+				player.points *= 2;
+				console.log('Your points doubled!');
+				break;
+			default: return;
+			}
+		}
+		this.draw = false;
+		this.code = 2;
+		this.x = 0;
+	}
+	
+	render() {
+		if (gem.draw) {
+		//console.log(this.sprite);
+			ctx.drawImage(Resources.get((this.sprite)[this.code]), this.x+10, 15, 90, 110);
+		}  
+		return;
+	}
 }
 
 // Now write your own player class
@@ -72,6 +110,8 @@ class Player {
 		this.points = 0;
 		this.gameOver = false;
 	}
+	
+
 
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -86,7 +126,7 @@ class Player {
 		if (player.gameOver) return;
 		
 		const incrementY = 82;
-		const incrementX = 102;
+		const incrementX = 100;
 		switch (move) {
 			case "up":
 				if (this.y === -5){break;}
@@ -99,14 +139,14 @@ class Player {
 				//console.log('new y is '+this.y);
 				break;
 			case "right":
-				if (this.x === 404){break;}
+				if (this.x === 400){break;}
 				this.x += incrementX;
-				console.log('new x is '+this.x);
+				//console.log('new x is '+this.x);
 				break;
 			case "left":
-				if (this.x === -4){break;}
+				if (this.x === 0){break;}
 				this.x -= incrementX;
-				console.log('new x is '+this.x);
+				//console.log('new x is '+this.x);
 				break;
 		}
 	}
@@ -127,7 +167,7 @@ let allEnemies = [e1, e2, e3];
 // Place all enemy objects in an array called allEnemies
 //let allEnemies = [new Enemy(), new Enemy(-150, 149, 6)];
 
-
+let gem = new Gem(0);
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
