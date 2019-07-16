@@ -105,6 +105,7 @@ var Engine = (function(global) {
     		p.points += 100;
     		reset();
     		console.log("level: " + p.lvl);
+    		//gems();
     	}
     }
     
@@ -203,6 +204,56 @@ var Engine = (function(global) {
     function drawPoints() {
     	ctx.fillText(player.points.toString(), 450, 40);
     }
+    
+    // This function adds gem bonuses to game
+    // Blue gem --> slows enemies
+    // Green gem --> adds one life
+    // Orange gem --> doubles score
+    /*
+    function gems() {
+    	const allGems = [
+    		{
+    			gemCode: 0,
+    			gemImage: 'images/GemOrange.png',
+    			gemPower: function () {
+    				player.points *= 2;
+    			}
+    		}, 
+    		{
+    			gemCode: 1,
+    			gemImage: 'images/GemGreen.png',
+    			gemPower: function () {
+    				player.points *= 2;
+    			}
+    		}, 
+    		{
+    			gemCode: 2,
+    			gemImage: 'images/GemBlue.png',
+    			gemPower: function () {
+    				player.points *= 2;
+    			}
+    		}
+    	];
+    	function rndNum(n){
+	    	return Math.floor(Math.random() * n);
+      	}
+    	function rndGem(){
+    		return rndNum(3); // Random gem nos. 0, 1 or 2
+    	}
+    	function drawGem() {
+    		let xpos = rndNum(5)*100;
+    		let gem = allGems[rndGem()];
+    		console.log('here we go');
+    		console.log(allGems);
+    		console.log(gem);
+    		ctx.drawImage("images/GemBlue.png", xpos, -5);
+    		gem.gemPower;
+    	}
+    	if (player.lvl % 2 === 0) {
+    		drawGem();
+    	}
+    }
+    */
 
     /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined

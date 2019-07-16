@@ -36,7 +36,7 @@ class Enemy {
 }
 
 function randomNumInInterval(a, b) {
-	return (Math.random() * (a - b) + b);
+	return (Math.floor(Math.random() * (a - b) + b));
 }
 
 // This function returs a random start position off screen for enemies
@@ -101,12 +101,12 @@ class Player {
 			case "right":
 				if (this.x === 404){break;}
 				this.x += incrementX;
-				//console.log('new x is '+this.x);
+				console.log('new x is '+this.x);
 				break;
 			case "left":
 				if (this.x === -4){break;}
 				this.x -= incrementX;
-				//console.log('new x is '+this.x);
+				console.log('new x is '+this.x);
 				break;
 		}
 	}
