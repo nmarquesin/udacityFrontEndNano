@@ -102,6 +102,7 @@ var Engine = (function(global) {
     function levelUp(p) {
     	if (p.y === -5) {
     		p.lvl++;
+    		p.points += 100;
     		reset();
     		console.log("level: " + p.lvl);
     	}
@@ -176,6 +177,31 @@ var Engine = (function(global) {
         }
 
         renderEntities();
+        drawLives();
+        drawPoints();
+    }
+    
+    /* This function draws the player's lives on the canvas */
+    
+    function drawLives() {
+    	const heart = 'images/Heart.png';
+    	let count;
+    	const heartWidth = 35;
+    	
+    	ctx.font = "25px Arial";
+    	
+    	if (player.gameOver) {
+    		ctx.fillText("Game Over", 5, heartWidth + 5);
+    		} else {
+		    	for (count = 0; count < player.lives; count++){
+		    	ctx.drawImage(Resources.get(heart), count*heartWidth+5, 5, heartWidth - 5, (heartWidth-5)*1.5);
+		    	}
+	    	}
+    }
+    
+    /* This function prints points on screen */
+    function drawPoints() {
+    	ctx.fillText(player.points.toString(), 450, 40);
     }
 
     /* This function is called by the render function and is called on each game
@@ -212,7 +238,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png', 
+        'images/Heart.png'
     ]);
     Resources.onReady(init);
 

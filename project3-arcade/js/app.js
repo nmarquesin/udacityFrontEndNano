@@ -44,6 +44,7 @@ class Player {
 		this.height = height;
 		this.lives = 3;
 		this.lvl = 0;
+		this.points = 0;
 		this.gameOver = false;
 	}
 
