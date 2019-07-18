@@ -21,10 +21,10 @@ For detailed instructions on how to get started, check out this [guide](https://
 
 This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
 
-## Running
+## How to run the game
 
-To run the game download the whole folder and same somewhere in your computer.
-Open the file 'index.html' in your browser.
+To run the game download the game folder and save it somewhere in your computer.
+Open the file 'index.html' in your browser. You are ready to play!
 
 ## Play
 

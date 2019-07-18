@@ -113,22 +113,13 @@ var Engine = (function(global) {
     		if (enemyLair.length > 1){
     			allEnemies.push(enemyLair.pop());
     		}
-    		//console.log("Now there are " + allEnemies.length + " enemies.");
     		reset();
-    		//console.log("level: " + p.lvl);
-    		//console.log('X pos of gem is '+ gem.x);
-    		//console.log('X pos of p was '+ oldPX);
-    		//console.log('gem.draw is '+ gem.draw);
     		if (p.lvl % 5 === 0 && gem.draw === false) {
     			document.getElementById('message').innerHTML = 'Reach the gem for a bonus!';
     			gem.draw = true;
     			gem.code = rndNum(3);
-    			gem.x = rndNum(3)*100+100;
-    			
-    			//console.log('Get the gem to ' + gem.superPower[gem.code]);
-    			//console.log('X pos of gem is '+gem.x);
-    			//console.log('gem.draw is '+ gem.draw); 
-    		} else if (gem.draw === true && oldPX === gem.x) {
+    			gem.x = rndNum(3)*100+130;
+    		} else if (gem.draw === true && oldPX === gem.x - 30) {
     			document.getElementById('message').innerHTML = 'How many points can you score?';
     			gem.power();
 	    		gem.draw = false;
@@ -158,7 +149,6 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
     }
 
     /* This function initially draws the "game level", it will then call
