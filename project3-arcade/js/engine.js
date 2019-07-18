@@ -63,6 +63,7 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
+		document.getElementById('message').innerHTML = 'Reach the water to score 100 points';
         reset();
         lastTime = Date.now();
         main();
@@ -88,6 +89,7 @@ var Engine = (function(global) {
     
     function collision(p) {
     	p.lives -= 1;
+    	p.points -= 500;
     	console.log("BANG! You now have " + p.lives + 
     	(p.lives === 1 ? " life" : " lives"));
     	reset();
@@ -108,19 +110,26 @@ var Engine = (function(global) {
     		p.lvl += 1;
     		p.points += 100;
     		let oldPX = player.x;
+    		if (enemyLair.length > 1){
+    			allEnemies.push(enemyLair.pop());
+    		}
+    		//console.log("Now there are " + allEnemies.length + " enemies.");
     		reset();
-    		console.log("level: " + p.lvl);
+    		//console.log("level: " + p.lvl);
     		//console.log('X pos of gem is '+ gem.x);
     		//console.log('X pos of p was '+ oldPX);
     		//console.log('gem.draw is '+ gem.draw);
     		if (p.lvl % 5 === 0 && gem.draw === false) {
+    			document.getElementById('message').innerHTML = 'Reach the gem for a bonus!';
     			gem.draw = true;
     			gem.code = rndNum(3);
-    			gem.x = rndNum(5)*100;
+    			gem.x = rndNum(3)*100+100;
+    			
     			//console.log('Get the gem to ' + gem.superPower[gem.code]);
     			//console.log('X pos of gem is '+gem.x);
     			//console.log('gem.draw is '+ gem.draw); 
     		} else if (gem.draw === true && oldPX === gem.x) {
+    			document.getElementById('message').innerHTML = 'How many points can you score?';
     			gem.power();
 	    		gem.draw = false;
     		}
@@ -197,7 +206,6 @@ var Engine = (function(global) {
         renderEntities();
         drawLives();
         drawPoints();
-        //drawGems();
     }
     
     /* This function draws the player's lives on the canvas */

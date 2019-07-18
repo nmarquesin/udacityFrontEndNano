@@ -14,21 +14,19 @@ class Enemy {
 		this.height = height;
 	}
 	
-
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+	// Update the enemy's position, required method for game
+	// Parameter: dt, a time delta between ticks
 	update(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.speedIncrement * dt;
-    if (this.x > 600) {
+    if (this.x > 650) {
     	this.x = randomStart();
     	this.speedIncrement = randomSpeed();
 	}}
 
-// Draw the enemy on the screen, required method for game
+	// Draw the enemy on the screen, required method for game
 	render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
@@ -42,7 +40,7 @@ function randomNumInInterval(a, b) {
 // This function returs a random start position off screen for enemies
 function randomStart() {
 	let startPos;
-	const a = -300
+	const a = -600
 	const b = -150;
 	startPos = randomNumInInterval(a, b);
 	return startPos;
@@ -52,7 +50,7 @@ function randomStart() {
 function randomSpeed() {
 	let speed;
 	const lSpeed = 50; // lower base speed
-	const hSpeed = 100; // higher base speed
+	const hSpeed = 200; // higher base speed
 	speed = randomNumInInterval(hSpeed + player.lvl * 10, lSpeed + player.lvl * 10); //increase random speeds when level increases
 	return speed;
 }
@@ -70,13 +68,20 @@ class Gem {
 				console.log('Your enemies are now slower!');
 				break;
 			case 1:
-				player.lives += 1;
-				console.log('You won a life!');
+				if (player.lives > 5) {
+					player.lives += 1;
+					console.log('You won a life!');
+					} else {player.points += 1000;
+					console.log('You won 1000 extra points!');}
 				break;
 			case 2:
-				player.points -= 100;
-				player.points *= 2;
-				console.log('Your points doubled!');
+				if (player.points > 0) {
+					player.points -= 100;
+					player.points *= 2;
+					console.log('Your points doubled!');
+					} else {player.points = 0;
+						console.log('Your score is back to zero.');}
+				
 				break;
 			default: return;
 			}
@@ -89,7 +94,7 @@ class Gem {
 	render() {
 		if (gem.draw) {
 		//console.log(this.sprite);
-			ctx.drawImage(Resources.get((this.sprite)[this.code]), this.x+10, 15, 90, 110);
+			ctx.drawImage(Resources.get((this.sprite)[this.code]), this.x+30, 50, 45, 60);
 		}  
 		return;
 	}
@@ -162,8 +167,18 @@ let player = new Player(); // player has to be instantiated before enemies becau
 let e1 = new Enemy(67);
 let e2 = new Enemy(149);
 let e3 = new Enemy(231);
+let e4 = new Enemy(67);
+let e5 = new Enemy(149);
+let e6 = new Enemy(231);
+let e7 = new Enemy(67);
+let e8 = new Enemy(149);
+let e9 = new Enemy(231);
+//let e10 = new Enemy(67);
+//let e11 = new Enemy(149);
+//let e12 = new Enemy(231);
 
-let allEnemies = [e1, e2, e3];
+let enemyLair = [null, e9, e8, e7, e6, e5, e4, e3, e2];
+let allEnemies = [e1];
 // Place all enemy objects in an array called allEnemies
 //let allEnemies = [new Enemy(), new Enemy(-150, 149, 6)];
 
