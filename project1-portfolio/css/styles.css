@@ -69,8 +69,12 @@ h6 {
 }
 
 a {
-  color: #2d3c49;
+  color: #7d97ad;
   text-decoration: none;
+}
+
+.education a {
+  text-decoration: underline;
 }
 
 section img {
