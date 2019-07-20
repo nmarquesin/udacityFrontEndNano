@@ -23,10 +23,33 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
-
+        
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
+    
+    // Create control buttons
+    let controlSup = doc.createElement('div'); // Element that contains the Up button
+    controlSup.id = 'controlSup';
+    doc.body.appendChild(controlSup);
+    let control = doc.createElement('div'); // Element that contains buttons left, right and down.
+    control.id = 'control';
+    doc.body.appendChild(control);
+    let leftBtn, upBtn, rightBtn, downBtn;
+    let controls = [upBtn, leftBtn, downBtn, rightBtn]; //, 'Left', 'Up', 'Right', 'Down'];
+    let i = 0;
+    for (i in controls) {    
+        controls[i] = doc.createElement('button');
+        if (i == 0) { document.getElementById('controlSup').appendChild(controls[i]);
+        } else {	document.getElementById('control').appendChild(controls[i]);
+    	}
+    }
+    const controlLabels = ['up', 'left', 'down', 'right'];
+    i = 0;
+    for (i in controls) {
+    	controls[i].innerHTML = controlLabels[i];
+    	controls[i].id = controlLabels[i];
+    	}
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.

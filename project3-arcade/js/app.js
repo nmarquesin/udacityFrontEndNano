@@ -179,3 +179,9 @@ document.addEventListener('keyup', function(e) {
     
     return;
 });
+
+// Event listener to click on control buttons
+document.addEventListener('click', function(event) {
+		let btn = event.target.id;
+		return player.handleInput(btn);
+		} );
