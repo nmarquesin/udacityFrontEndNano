@@ -126,9 +126,9 @@ footer p {
     margin-right: auto;
   }
 
-  footer {
+  /*footer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-  }
+    justify-content: space-evenly;
+  }*/
 }
